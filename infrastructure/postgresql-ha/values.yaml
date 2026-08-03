@@ -1,0 +1,12 @@
+global:
+  postgresql:
+    password: "YourPostgresPassword123!"
+    repmgrPassword: "YourRepmgrPassword123!"
+pgpool:
+  adminPassword: "YourPgpoolAdminPassword123!"
+  replicaCount: 2
+postgresql:
+  replicaCount: 3
+  persistence:
+    enabled: true
+    size: 3Gi
