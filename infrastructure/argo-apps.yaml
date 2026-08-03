@@ -1,0 +1,122 @@
+---
+# 1. REDIS STANDALONE
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis-standalone
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    chart: redis
+    targetRevision: 18.x.x
+    helm:
+      valueFiles:
+        - '$values/infrastructure/redis-standalone/values.yaml'
+  sources:
+    - repoURL: 'https://charts.bitnami.com/bitnami'
+      chart: redis
+      targetRevision: 18.x.x
+      helm:
+        valueFiles:
+          - '$values/infrastructure/redis-standalone/values.yaml'
+    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: redis
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# 2. REDIS CLUSTER
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis-cluster
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: 'https://charts.bitnami.com/bitnami'
+      chart: redis-cluster
+      targetRevision: 10.x.x
+      helm:
+        valueFiles:
+          - '$values/infrastructure/redis-cluster/values.yaml'
+    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: redis-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# 3. POSTGRESQL HA (WITH PGPOOL)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql-ha
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: 'https://charts.bitnami.com/bitnami'
+      chart: postgresql-ha
+      targetRevision: 12.x.x
+      helm:
+        valueFiles:
+          - '$values/infrastructure/postgresql-ha/values.yaml'
+    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: postgresql
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# 4. PGADMIN4
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgadmin
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: 'https://helm.runix.net'
+      chart: pgadmin4
+      targetRevision: 1.x.x
+      helm:
+        valueFiles:
+          - '$values/infrastructure/pgadmin/values.yaml'
+    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: postgresql
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
