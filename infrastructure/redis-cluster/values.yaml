@@ -1,9 +1,9 @@
 cluster:
-  nodes: 6
+  nodes: 3
   replicas: 1
 auth:
   enabled: true
   password: "YourStrongClusterPassword123!"
 persistence:
   enabled: true
-  size: 5Gi
+  size: 3Gi
