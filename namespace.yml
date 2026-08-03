@@ -1,2 +1,5 @@
-namespaces:
-  - namespace: redis
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redis
+
