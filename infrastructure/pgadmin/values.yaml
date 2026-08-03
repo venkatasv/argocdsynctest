@@ -1,0 +1,6 @@
+env:
+  email: "admin@example.com"
+  password: "YourPgAdminPassword123!"
+service:
+  type: ClusterIP
+  port: 80
