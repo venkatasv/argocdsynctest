@@ -1,31 +1,39 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: redis-standalone
-  namespace: redis
+  namespace: redis     #argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
+  source:
+    # 1. Target the official Bitnami Helm Repository
+    repoURL: 'https://bitnami.com'
+    chart: redis
+    targetRevision: 20.4.0 # Pin the major version for stability
+    
+    # 2. Reference your custom configuration tracked in GitHub
+    helm:
+      valueFiles:
+        - '$values/redis/values.yaml'
+  
+  # This block allows ArgoCD to read files from your git repo alongside the Helm chart
   sources:
-    - repoURL: 'https://charts.bitnami.com/bitnami'
-      chart: redis
-      targetRevision: 18.2.1               # <-- Use exact version (e.g. 18.2.1 instead of 18.x.x)
-      helm:
-        valueFiles:
-          - '$values/infrastructure/redis-standalone/values.yaml'
-    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
-      targetRevision: HEAD
-      ref: values                          # <-- Must match $values above
+    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git' # Replace with your Git URL
+      targetRevision: main # Replace with your branch
+      ref: values
+
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: redis
+    server: 'https://kubernetes.default.svc' # Deploys to the same cluster running ArgoCD
+    namespace: redis     #database # Target namespace for Redis
+
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true                # <-- Auto-creates the 'redis' namespace if missing
-
+      - CreateNamespace=true # Automatically builds the 'database' namespace if missing
 ---
 # 2. REDIS CLUSTER
 apiVersion: argoproj.io/v1alpha1
