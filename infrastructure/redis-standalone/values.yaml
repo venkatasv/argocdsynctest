@@ -1,8 +1,23 @@
+# Disable replication and deploy a single standalone pod
 architecture: standalone
-auth:
-  enabled: true
-  password: "YourStrongRedisPassword123!"
+
+# Enable persistence if you want your data to survive pod restarts
 master:
   persistence:
     enabled: true
-    size: 3Gi
+    size: 2Gi
+    storageClass: "standard" # Replace with your cluster's StorageClass
+
+# Define resource limits for the standalone container
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+# Optional: Disable password if testing (Not recommended for production)
+auth:
+  enabled: true
+  sentinel: false
