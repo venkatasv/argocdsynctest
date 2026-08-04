@@ -4,7 +4,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: redis-standalone
-  namespace: argocd
+  namespace: redis
 spec:
   project: default
   source:
@@ -40,7 +40,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: redis-cluster
-  namespace: argocd
+  namespace: redis
 spec:
   project: default
   sources:
@@ -69,7 +69,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: postgresql-ha
-  namespace: argocd
+  namespace: redis
 spec:
   project: default
   sources:
@@ -98,7 +98,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: pgadmin
-  namespace: argocd
+  namespace: redis
 spec:
   project: default
   sources:
