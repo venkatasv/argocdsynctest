@@ -15,8 +15,17 @@ spec:
     
     # 2. Reference your custom configuration tracked in GitHub
     helm:
-      valueFiles:
-        - '$values/redis-standalone/values.yaml'
+      valuesObject:
+        architecture: standalone
+        auth:
+          enabled: true
+          # Note: Redis will generate a random password secret called 'redis' if not supplied
+        master:
+          persistence:
+            enabled: true
+            size: 2Gi
+      ####valueFiles:
+        ######- '$values/redis-standalone/values.yaml'
   
   # This block allows ArgoCD to read files from your git repo alongside the Helm chart
   sources:
