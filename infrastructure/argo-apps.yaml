@@ -10,14 +10,14 @@ spec:
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
     chart: redis
-    targetRevision: 18.x.x
+    targetRevision: 18.2.1
     helm:
       valueFiles:
         - '$values/infrastructure/redis-standalone/values.yaml'
   sources:
     - repoURL: 'https://charts.bitnami.com/bitnami'
       chart: redis
-      targetRevision: 18.x.x
+      targetRevision: 18.2.1
       helm:
         valueFiles:
           - '$values/infrastructure/redis-standalone/values.yaml'
