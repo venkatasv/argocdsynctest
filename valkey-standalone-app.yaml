@@ -3,11 +3,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: valkey-standalone
-  namespace: redis
+  namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://valkey.io/valkey-helm/
+    repoURL: repoURL: https://valkey-io.github.io/valkey-helm/
     chart: valkey
     targetRevision: "0.11.0"     # check github.com/valkey-io/valkey-helm/releases for newer
     helm:
