@@ -1,29 +1,21 @@
 ---
-# 1. REDIS STANDALONE
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: redis-standalone
-  namespace: redis
+  namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
-    chart: redis
-    targetRevision: 18.2.1
-    helm:
-      valueFiles:
-        - '$values/infrastructure/redis-standalone/values.yaml'
   sources:
     - repoURL: 'https://charts.bitnami.com/bitnami'
       chart: redis
-      targetRevision: 18.2.1
+      targetRevision: 18.2.1               # <-- Use exact version (e.g. 18.2.1 instead of 18.x.x)
       helm:
         valueFiles:
           - '$values/infrastructure/redis-standalone/values.yaml'
     - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
       targetRevision: HEAD
-      ref: values
+      ref: values                          # <-- Must match $values above
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: redis
@@ -32,7 +24,7 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - CreateNamespace=true                # <-- Auto-creates the 'redis' namespace if missing
 
 ---
 # 2. REDIS CLUSTER
