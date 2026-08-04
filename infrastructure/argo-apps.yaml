@@ -1,8 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: AppProject
 metadata:
-  name: redis-standalone
-  namespace: redis     #argocd
+  name: default
+  namespace: argocd
+spec:
+  sourceNamespaces:
+    - redis
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
