@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: gitops
+  namespace: argocd
+spec:
+  description: "Project that allows the repository and required external helm/chart repos used by our applications"
+  sourceRepos:
+    - https://github.com/venkatasv/argocdsynctest.git
+    - https://charts.bitnami.com/bitnami
+    - https://helm.runix.net
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+  # Optionally allow cluster-scoped resources if your apps need them
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

@@ -1,0 +1,50 @@
+name: Bootstrap Argo CD GitOps
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Decode kubeconfig
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig
+          export KUBECONFIG="$PWD/kubeconfig"
+          kubectl version --client
+          kubectl cluster-info
+
+      - name: Install Argo CD
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+        run: |
+          kubectl apply -k infrastructure/argocd
+          kubectl rollout status deployment/argocd-server -n argocd --timeout=600s
+
+      - name: Create Argo CD Project (allow external helm/git repos)
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+        run: |
+          kubectl apply -f infrastructure/argocd/project.yaml
+
+      - name: Apply GitOps applications
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+        run: |
+          kubectl apply -f infrastructure/namespace.yml
+          kubectl apply -f infrastructure/argo-apps.yaml
