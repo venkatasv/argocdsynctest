@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
+    repoURL: 'https://charts.bitnami.com'
     chart: redis
     targetRevision: 20.4.0
     helm:
