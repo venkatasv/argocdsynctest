@@ -2,48 +2,29 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: redis-standalone
-  namespace: redis
-spec:
-  project: redis  # <--- Change from 'default' to 'redis'
-  # ... rest of your spec
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  namespace: argocd
 spec:
   project: default
   source:
-    # 1. Target the official Bitnami Helm Repository
     repoURL: 'https://charts.bitnami.com/bitnami'
     chart: redis
-    targetRevision: 20.4.0 # Pin the major version for stability
-    
-    # 2. Reference your custom configuration tracked in GitHub
+    targetRevision: 20.4.0
     helm:
       valuesObject:
         architecture: standalone
         auth:
           enabled: true
-          # Note: Redis will generate a random password secret called 'redis' if not supplied
         master:
           persistence:
             enabled: true
             size: 2Gi
-            storageClass: "standard"
-      ####valueFiles:
-        ######- '$values/redis-standalone/values.yaml'
-  
-  # This block allows ArgoCD to read files from your git repo alongside the Helm chart
-  sources:
-    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git' # Replace with your Git URL
-      targetRevision: main # Replace with your branch
-      ref: values
-
+            storageClass: standard
   destination:
-    server: 'https://kubernetes.default.svc' # Deploys to the same cluster running ArgoCD
-    namespace: redis     #database # Target namespace for Redis
-
+    server: 'https://kubernetes.default.svc'
+    namespace: redis
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true # Automatically builds the 'database' namespace if missing
+      - CreateNamespace=true
