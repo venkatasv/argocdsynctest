@@ -6,7 +6,7 @@ master:
   persistence:
     enabled: true
     size: 2Gi
-    #storageClass: "standard" # Replace with your cluster's StorageClass
+    storageClass: "standard" # Replace with your cluster's StorageClass
 
 # Define resource limits for the standalone container
 resources:
