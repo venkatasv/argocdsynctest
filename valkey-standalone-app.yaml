@@ -1,9 +1,8 @@
 # valkey-standalone-app.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: valkey-standalone
-  namespace: redis
 spec:
   project: default
   source:
