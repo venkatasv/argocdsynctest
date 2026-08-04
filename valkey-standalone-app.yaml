@@ -1,0 +1,29 @@
+# valkey-standalone-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: valkey-standalone
+  namespace: redis
+spec:
+  project: default
+  source:
+    repoURL: https://valkey.io/valkey-helm/
+    chart: valkey
+    targetRevision: "0.11.0"     # check github.com/valkey-io/valkey-helm/releases for newer
+    helm:
+      values: |
+        auth:
+          enabled: true
+          password: "ChangeMeValkey123!"
+        persistence:
+          enabled: true
+          size: 8Gi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: redis-standalone
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
