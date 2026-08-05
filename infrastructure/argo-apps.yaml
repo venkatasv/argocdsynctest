@@ -11,6 +11,7 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
     targetRevision: HEAD
   - chart: redis
@@ -39,6 +40,7 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
     targetRevision: HEAD
   - chart: redis-cluster
@@ -67,6 +69,7 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
     targetRevision: HEAD
   - chart: postgresql-ha
@@ -95,6 +98,7 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
     targetRevision: HEAD
   - chart: pgadmin4
