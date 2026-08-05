@@ -11,12 +11,12 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   - chart: redis
     helm:
       valueFiles:
-      - $0:/infrastructure/redis-standalone/values.yaml
+      - $git:/infrastructure/redis-standalone/values.yaml
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 18.2.1
   syncPolicy:
@@ -39,12 +39,12 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   - chart: redis-cluster
     helm:
       valueFiles:
-      - $0:/infrastructure/redis-cluster/values.yaml
+      - $git:/infrastructure/redis-cluster/values.yaml
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 10.x.x
   syncPolicy:
@@ -67,12 +67,12 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   - chart: postgresql-ha
     helm:
       valueFiles:
-      - $0:/infrastructure/postgresql-ha/values.yaml
+      - $git:/infrastructure/postgresql-ha/values.yaml
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 12.x.x
   syncPolicy:
@@ -95,12 +95,12 @@ spec:
   sources:
   - name: git
     path: .
+    ref: HEAD
     repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   - chart: pgadmin4
     helm:
       valueFiles:
-      - $0:/infrastructure/pgadmin/values.yaml
+      - $git:/infrastructure/pgadmin/values.yaml
     repoURL: https://helm.runix.net
     targetRevision: 1.x.x
   syncPolicy:
