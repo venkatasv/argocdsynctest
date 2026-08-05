@@ -9,15 +9,15 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
+  - path: .
+    repoURL: https://github.com/venkatasv/argocdsynctest.git
+    targetRevision: HEAD
   - chart: redis
     helm:
       valueFiles:
       - $values:/infrastructure/redis-standalone/values.yaml
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 18.2.1
-  - path: .
-    repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
@@ -36,15 +36,15 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
+  - path: .
+    repoURL: https://github.com/venkatasv/argocdsynctest.git
+    targetRevision: HEAD
   - chart: redis-cluster
     helm:
       valueFiles:
       - $values:/infrastructure/redis-cluster/values.yaml
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 10.x.x
-  - path: .
-    repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
@@ -63,15 +63,15 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
+  - path: .
+    repoURL: https://github.com/venkatasv/argocdsynctest.git
+    targetRevision: HEAD
   - chart: postgresql-ha
     helm:
       valueFiles:
       - $values:/infrastructure/postgresql-ha/values.yaml
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 12.x.x
-  - path: .
-    repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
@@ -90,15 +90,15 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
+  - path: .
+    repoURL: https://github.com/venkatasv/argocdsynctest.git
+    targetRevision: HEAD
   - chart: pgadmin4
     helm:
       valueFiles:
       - $values:/infrastructure/pgadmin/values.yaml
     repoURL: https://helm.runix.net
     targetRevision: 1.x.x
-  - path: .
-    repoURL: https://github.com/venkatasv/argocdsynctest.git
-    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
