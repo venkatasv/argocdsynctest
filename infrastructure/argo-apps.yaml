@@ -4,7 +4,7 @@ metadata:
   name: redis-standalone
   namespace: argocd
 spec:
-  project: gitops
+  project: default
   sources:
   - repoURL: https://charts.bitnami.com/bitnami
     chart: redis
@@ -30,7 +30,7 @@ metadata:
   name: redis-cluster
   namespace: argocd
 spec:
-  project: gitops
+  project: default
   sources:
   - repoURL: https://charts.bitnami.com/bitnami
     chart: redis-cluster
@@ -56,7 +56,7 @@ metadata:
   name: postgresql-ha
   namespace: argocd
 spec:
-  project: gitops
+  project: default
   sources:
   - repoURL: https://charts.bitnami.com/bitnami
     chart: postgresql-ha
@@ -82,7 +82,7 @@ metadata:
   name: pgadmin
   namespace: argocd
 spec:
-  project: gitops
+  project: default
   sources:
   - repoURL: https://helm.runix.net
     chart: pgadmin4
