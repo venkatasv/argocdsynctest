@@ -1,8 +1,9 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: redis-standalone
-  namespace: redis
+  namespace: argocd
 spec:
   project: gitops
   sources:
@@ -11,23 +12,10 @@ spec:
       targetRevision: 18.2.1
       helm:
         valueFiles:
-          - '$values/infrastructure/redis-standalone/values.yaml'
+          - 'infrastructure/redis-standalone/values.yaml'
     - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
       targetRevision: HEAD
       path: infrastructure/redis-standalone
-
-  project: gitops
-  sources:
-    - repoURL: 'https://charts.bitnami.com/bitnami'
-      chart: redis
-      targetRevision: 18.2.1               # <-- Use exact version (e.g. 18.2.1 instead of 18.x.x)
-      helm:
-        valueFiles:
-          - '$values/infrastructure/redis-standalone/values.yaml'
-    - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
-      targetRevision: HEAD
-      path: infrastructure/redis-standalone
->>>>>>> d35cada (Add ArgoCD AppProject to allow Bitnami/helm repos; update Applications to use 'gitops' project; update workflow to apply project before apps)
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: redis
@@ -36,9 +24,7 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-<<<<<<< HEAD
-=======
-      - CreateNamespace=true                # <-- Auto-creates the 'redis' namespace if missing
+      - CreateNamespace=true
 
 ---
 # 2. REDIS CLUSTER
@@ -46,7 +32,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: redis-cluster
-  namespace: redis
+  namespace: argocd
 spec:
   project: gitops
   sources:
@@ -55,7 +41,7 @@ spec:
       targetRevision: 10.x.x
       helm:
         valueFiles:
-          - '$values/infrastructure/redis-cluster/values.yaml'
+          - 'infrastructure/redis-cluster/values.yaml'
     - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
       targetRevision: HEAD
       path: infrastructure/redis-cluster
@@ -75,7 +61,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: postgresql-ha
-  namespace: redis
+  namespace: argocd
 spec:
   project: gitops
   sources:
@@ -84,7 +70,7 @@ spec:
       targetRevision: 12.x.x
       helm:
         valueFiles:
-          - '$values/infrastructure/postgresql-ha/values.yaml'
+          - 'infrastructure/postgresql-ha/values.yaml'
     - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
       targetRevision: HEAD
       path: infrastructure/postgresql-ha
@@ -104,7 +90,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: pgadmin
-  namespace: redis
+  namespace: argocd
 spec:
   project: gitops
   sources:
@@ -113,7 +99,7 @@ spec:
       targetRevision: 1.x.x
       helm:
         valueFiles:
-          - '$values/infrastructure/pgadmin/values.yaml'
+          - 'infrastructure/pgadmin/values.yaml'
     - repoURL: 'https://github.com/venkatasv/argocdsynctest.git'
       targetRevision: HEAD
       path: infrastructure/pgadmin
@@ -125,5 +111,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
->>>>>>> d35cada (Add ArgoCD AppProject to allow Bitnami/helm repos; update Applications to use 'gitops' project; update workflow to apply project before apps)
       - CreateNamespace=true
